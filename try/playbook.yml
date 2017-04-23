@@ -1,0 +1,6 @@
+---
+- hosts: all
+  become: yes
+  roles:
+    - role: "{{ playbook_dir | dirname }}"
+      docker_version: 1.12*
