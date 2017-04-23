@@ -1,0 +1,27 @@
+---
+- name: Add yum repository
+  yum_repository:
+    name: docker
+    description: Docker project repository
+    baseurl: "{{ docker_yum_repo }}"
+    gpgcheck: "{{ docker_yum_gpg_check }}"
+    gpgkey: "{{ docker_yum_gpg_key }}"
+
+- name: Install docker
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - docker-engine-{{ docker_version }}
+    - yum-plugin-versionlock
+
+- name: Lock docker version
+  command: yum versionlock docker-engine
+  register: _docker_versionlock
+  changed_when: "'versionlock added: 1' in _docker_versionlock.stdout"
+
+- name: Install EPEL
+  yum:
+    name: epel-release
+    state: present
+  when: docker_install_docker_py

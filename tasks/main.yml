@@ -1,11 +1,24 @@
 ---
+- name: Load distro-specific variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
 - name: Include install tasks
   include: install/{{ ansible_pkg_mgr }}.yml
+
+- name: Install pip
+  package:
+    name: "{{ docker_pip_package }}"
+    state: present
+  when: docker_install_docker_py
 
 - name: install docker-py
   pip:
     name: docker-py
     state: present
+  when: docker_install_docker_py
 
 - name: ensure "docker" group present
   group:
