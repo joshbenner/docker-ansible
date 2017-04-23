@@ -1,29 +1,24 @@
 ---
 - name: Include install tasks
-  become: yes
   include: install/{{ ansible_pkg_mgr }}.yml
 
 - name: install docker-py
-  become: yes
   pip:
     name: docker-py
     state: present
 
 - name: ensure "docker" group present
-  become: yes
   group:
     name: docker
     state: present
     system: yes
 
 - name: enable docker service
-  become: yes
   service:
     name: docker
     enabled: yes
 
 - name: start docker
-  become: yes
   service:
     name: docker
     state: started
