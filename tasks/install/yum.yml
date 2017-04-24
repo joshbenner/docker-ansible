@@ -24,4 +24,4 @@
   yum:
     name: epel-release
     state: present
-  when: docker_install_docker_py
+  when: docker_install_docker_py and docker_install_epel

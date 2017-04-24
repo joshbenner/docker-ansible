@@ -1,3 +1,6 @@
 ---
 docker_version: '*'
 docker_install_docker_py: true
+
+# Only used if docker_install_docker_py is true
+docker_install_epel: false

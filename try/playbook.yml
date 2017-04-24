@@ -4,3 +4,4 @@
   roles:
     - role: "{{ playbook_dir | dirname }}"
       docker_version: 1.12*
+      docker_install_epel: true
