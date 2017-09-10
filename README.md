@@ -1,5 +1,6 @@
 docker
 ======
+[![Build Status](https://travis-ci.org/joshbenner/docker-ansible.svg?branch=master)](https://travis-ci.org/joshbenner/docker-ansible)
 
 Installs Docker Engine from repositories, allowing for specific versions.
 
@@ -10,8 +11,8 @@ Uses [molecule](https://github.com/metacloud/molecule) for automated testing.
 
 Testing requirements:
 * [molecule](https://github.com/metacloud/molecule)
-* [VirtualBox](https://virtualbox.org)
-* [Vagrant](https://www.vagrantup.com)
+* docker
+* docker-py
 
 
 | Command             | Description                  |
