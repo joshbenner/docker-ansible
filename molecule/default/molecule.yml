@@ -2,14 +2,22 @@
 dependency:
   name: galaxy
 driver:
-  name: vagrant
-  provider:
-    name: virtualbox
+  name: docker
 lint:
   name: yamllint
 platforms:
-  - name: instance
-    box: ubuntu/xenial64
+  - name: xenial
+    image: geerlingguy/docker-ubuntu1604-ansible
+    command: /lib/systemd/systemd
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: yes
+  - name: centos
+    image: geerlingguy/docker-centos7-ansible
+    command: /usr/lib/systemd/systemd
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: yes
 provisioner:
   name: ansible
   lint:

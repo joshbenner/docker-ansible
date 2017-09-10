@@ -9,9 +9,8 @@ Requirements
 ============
 
 * Ansible 2.2
-* Vagrant
-* Virtualbox, Parallels, VMware Fusion, VMware Workstation or VMware Desktop
-* python-vagrant
+* Docker Engine
+* docker-py
 
 Install OS dependencies on CentOS 7
 
@@ -27,7 +26,7 @@ Install OS dependencies on Ubuntu 16.x
 .. code-block:: bash
 
   $ sudo apt-get update
-  $ sudo apt-get install -y python-pip libssl-dev vagrant virtualbox
+  $ sudo apt-get install -y python-pip libssl-dev docker-engine
   # If installing Molecule from source.
   $ sudo apt-get install -y libffi-dev git
 
@@ -43,5 +42,5 @@ Install using pip:
 .. code-block:: bash
 
   $ sudo pip install ansible
-  $ sudo pip install python-vagrant
+  $ sudo pip install docker-py
   $ sudo pip install molecule --pre
