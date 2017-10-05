@@ -11,7 +11,7 @@
 
 - name: Add apt repository
   apt_repository:
-    repo: deb {{ docker_apt_repo }} {{ ansible_distribution|lower }}-{{ ansible_distribution_release|lower }} {{ docker_apt_channel }}
+    repo: '{{ docker_apt_repo }}'
     filename: docker
     update_cache: yes
 
@@ -19,7 +19,10 @@
   apt:
     name: docker-engine={{ docker_version }}
     state: present
+  notify: restart docker
 
+# Installing new version switches 'hold' to 'install', but this should
+# idempotently restore the hold, even if we've just updated the version.
 - name: Hold docker version
   dpkg_selections:
     name: docker-engine

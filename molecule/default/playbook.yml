@@ -4,3 +4,4 @@
   roles:
     - role: ../../..
       docker_install_epel: true
+      docker_log_driver: syslog

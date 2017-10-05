@@ -14,6 +14,7 @@
   with_items:
     - docker-engine-{{ docker_version }}
     - yum-plugin-versionlock
+  notify: restart docker
 
 - name: Lock docker version
   command: yum versionlock docker-engine

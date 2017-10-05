@@ -26,6 +26,23 @@
     state: present
     system: yes
 
+- name: Make sure docker config dir exists
+  file:
+    path: /etc/docker
+    state: directory
+    owner: root
+    group: root
+    mode: 0700
+
+- name: Configure docker daemon
+  copy:
+    dest: /etc/docker/daemon.json
+    content: "{{ docker_daemon_config | to_nice_json }}\n"
+    owner: root
+    group: root
+    mode: 0600
+  notify: restart docker
+
 - name: enable docker service
   service:
     name: docker

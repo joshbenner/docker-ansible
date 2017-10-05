@@ -4,3 +4,21 @@ docker_install_docker_py: true
 
 # Only used if docker_install_docker_py is true
 docker_install_epel: false
+
+docker_log_driver: json-file
+docker_log_opts: {}
+docker_live_restore: true
+
+docker_daemon_config:
+  live-restore: "{{ docker_live_restore }}"
+  log-driver: "{{ docker_log_driver }}"
+  log-opts: "{{ docker_log_opts }}"
+
+docker_apt_keyserver: p80.pool.sks-keyservers.net
+docker_apt_key_id: 58118E89F3A912897C070ADBF76221572C52609D
+docker_apt_repo: deb https://apt.dockerproject.org/repo {{ ansible_distribution|lower }}-{{ ansible_distribution_release|lower }} main
+
+# "centos" repo used for CentOS and RHEL, but not Fedora.
+docker_yum_repo: https://yum.dockerproject.org/repo/main/centos/{{ ansible_distribution_major_version }}/
+docker_yum_gpg_key: https://yum.dockerproject.org/gpg
+docker_yum_gpg_check: yes
