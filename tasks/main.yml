@@ -14,9 +14,15 @@
     state: present
   when: docker_install_docker_py
 
-- name: install docker-py
+- name: Remove old docker-py
   pip:
     name: docker-py
+    state: absent
+  when: docker_install_docker_py
+
+- name: Install docker Python package
+  pip:
+    name: docker
     state: present
   when: docker_install_docker_py
 
