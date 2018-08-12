@@ -48,6 +48,10 @@
     name: docker
     enabled: yes
 
+# This avoids a start and immediate restart upon initial install.
+- name: Flush handlers
+  meta: flush_handlers
+
 - name: start docker
   service:
     name: docker

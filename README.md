@@ -1,8 +1,22 @@
-docker
-======
+joshbenner.docker
+=================
 [![Build Status](https://travis-ci.org/joshbenner/docker-ansible.svg?branch=master)](https://travis-ci.org/joshbenner/docker-ansible)
 
 Installs Docker Engine from repositories, allowing for specific versions.
+
+**NOTE:** This will pin the docker-engine version on Debian and RedHat family systems.
+
+Example Playbook
+----------------
+
+```yaml
+- name: Docker
+  hosts: docker-servers
+  roles:
+    - role: joshbenner.docker
+      docker_log_driver: syslog
+      docker_version: 1.12*
+```
 
 Testing
 -------

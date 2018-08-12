@@ -3,6 +3,7 @@
   apt:
     name: apt-transport-https
     state: present
+  when: '"https" in docker_apt_repo'
 
 - name: Import apt keys
   apt_key:
@@ -15,15 +16,16 @@
     filename: docker
     update_cache: yes
 
+- name: Pin docker package version
+  copy:
+    dest: /etc/apt/preferences.d/docker
+    content: |
+      Package: docker-engine
+      Pin: version {{ docker_version }}
+      Pin-Priority: 1002
+
 - name: Install docker
   apt:
     name: docker-engine={{ docker_version }}
     state: present
   notify: restart docker
-
-# Installing new version switches 'hold' to 'install', but this should
-# idempotently restore the hold, even if we've just updated the version.
-- name: Hold docker version
-  dpkg_selections:
-    name: docker-engine
-    selection: hold

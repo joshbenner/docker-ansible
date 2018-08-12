@@ -1,4 +1,9 @@
 ---
+- name: Make sure yum can lock versions
+  yum:
+    name: yum-plugin-versionlock
+    state: present
+
 - name: Add yum repository
   yum_repository:
     name: docker
@@ -7,19 +12,24 @@
     gpgcheck: "{{ docker_yum_gpg_check }}"
     gpgkey: "{{ docker_yum_gpg_key }}"
 
+- name: Unlock docker version in YUM
+  command: yum versionlock delete docker-engine
+  args:
+    warn: false
+  changed_when: false
+  ignore_errors: yes
+
 - name: Install docker
   yum:
-    name: "{{ item }}"
+    name: docker-engine-{{ docker_version }}
     state: present
-  with_items:
-    - docker-engine-{{ docker_version }}
-    - yum-plugin-versionlock
   notify: restart docker
 
 - name: Lock docker version
   command: yum versionlock docker-engine
-  register: _docker_versionlock
-  changed_when: "'versionlock added: 1' in _docker_versionlock.stdout"
+  args:
+    warn: false
+  changed_when: false
 
 - name: Install EPEL
   yum:
