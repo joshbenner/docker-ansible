@@ -13,7 +13,7 @@
     gpgkey: "{{ docker_yum_gpg_key }}"
 
 - name: Unlock docker version in YUM
-  command: yum versionlock delete docker-engine
+  command: yum versionlock delete {{ docker_package }}
   args:
     warn: false
   changed_when: false
@@ -21,12 +21,12 @@
 
 - name: Install docker
   yum:
-    name: docker-engine-{{ docker_version }}
+    name: "{{ docker_package }}-{{ docker_version }}"
     state: present
   notify: restart docker
 
 - name: Lock docker version
-  command: yum versionlock docker-engine
+  command: yum versionlock {{ docker_package }}
   args:
     warn: false
   changed_when: false

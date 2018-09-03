@@ -5,10 +5,17 @@
     state: present
   when: '"https" in docker_apt_repo'
 
-- name: Import apt keys
+- name: Import apt key from keyserver
   apt_key:
     keyserver: '{{ docker_apt_keyserver }}'
     id: '{{ docker_apt_key_id }}'
+  when: docker_apt_keyserver
+
+- name: Import apt key from URL
+  apt_key:
+    url: "{{ docker_apt_key_url }}"
+    state: present
+  when: docker_apt_key_url is defined
 
 - name: Add apt repository
   apt_repository:
@@ -20,12 +27,12 @@
   copy:
     dest: /etc/apt/preferences.d/docker
     content: |
-      Package: docker-engine
+      Package: {{ docker_package }}
       Pin: version {{ docker_version }}
       Pin-Priority: 1002
 
 - name: Install docker
   apt:
-    name: docker-engine={{ docker_version }}
+    name: "{{ docker_package }}={{ docker_version }}"
     state: present
   notify: restart docker
