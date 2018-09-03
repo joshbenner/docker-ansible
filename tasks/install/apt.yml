@@ -9,7 +9,7 @@
   apt_key:
     keyserver: '{{ docker_apt_keyserver }}'
     id: '{{ docker_apt_key_id }}'
-  when: docker_apt_keyserver
+  when: docker_apt_keyserver and docker_apt_key_id
 
 - name: Import apt key from URL
   apt_key:
