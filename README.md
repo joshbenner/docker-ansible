@@ -2,9 +2,9 @@ joshbenner.docker
 =================
 [![Build Status](https://travis-ci.org/joshbenner/docker-ansible.svg?branch=master)](https://travis-ci.org/joshbenner/docker-ansible)
 
-Installs Docker Engine from repositories, allowing for specific versions.
+Installs Docker from repositories, allowing for specific versions.
 
-**NOTE:** This will pin the docker-engine version on Debian and RedHat family systems.
+**NOTE:** This will pin the docker package version on Debian and RedHat family systems.
 
 Example Playbook
 ----------------
@@ -27,10 +27,8 @@ Install Docker CE using docker.com repository on Ubuntu:
   become: yes
   roles:
     - role: joshbenner.docker
-      docker_apt_key_id: ~
-      docker_apt_key_url: https://download.docker.com/linux/ubuntu/gpg
-      docker_apt_repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
-      docker_package: docker-ce
+      docker_use_docker_ce: true
+      docker_version: 18.06.1*
 ```
 
 Testing
@@ -39,9 +37,9 @@ Testing
 Uses [molecule](https://github.com/metacloud/molecule) for automated testing.
 
 Testing requirements:
-* [molecule](https://github.com/metacloud/molecule)
-* docker
-* docker-py
+* Python
+* Docker
+* Install Python requirements in molecule/requirements.txt
 
 
 | Command             | Description                  |

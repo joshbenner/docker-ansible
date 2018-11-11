@@ -14,14 +14,18 @@ docker_daemon_config:
   log-driver: "{{ docker_log_driver }}"
   log-opts: "{{ docker_log_opts }}"
 
-docker_apt_keyserver: p80.pool.sks-keyservers.net
-docker_apt_key_id: 58118E89F3A912897C070ADBF76221572C52609D
-# docker_apt_key_url:
-docker_apt_repo: deb https://apt.dockerproject.org/repo {{ ansible_distribution|lower }}-{{ ansible_distribution_release|lower }} main
+# If true, will configure defaults to use download.docker.com instead of
+# dockerproject. Defaults below can still be overridden.
+docker_use_docker_ce: false
+
+docker_apt_keyserver: "{{ _docker_default_apt_keyserver }}"
+docker_apt_key_id: "{{ _docker_default_apt_key_id }}"
+docker_apt_key_url: "{{ _docker_default_apt_key_url }}"
+docker_apt_repo: "{{ _docker_default_apt_repo }}"
 
 # "centos" repo used for CentOS and RHEL, but not Fedora.
 docker_yum_repo: https://yum.dockerproject.org/repo/main/centos/{{ ansible_distribution_major_version }}/
 docker_yum_gpg_key: https://yum.dockerproject.org/gpg
 docker_yum_gpg_check: yes
 
-docker_package: docker-engine
+docker_package: "{{ _docker_default_package | default('docker-engine') }}"

@@ -1,0 +1,6 @@
+---
+_docker_default_apt_keyserver: ''
+_docker_default_apt_key_id: ''
+_docker_default_apt_repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+_docker_default_apt_key_url: http://download.docker.com/linux/ubuntu/gpg
+_docker_default_package: docker-ce

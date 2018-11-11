@@ -6,22 +6,41 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: xenial
+  - name: xenial-docker-ce
     image: geerlingguy/docker-ubuntu1604-ansible
     command: /lib/systemd/systemd
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: yes
+    groups:
+      - docker-ce
+  - name: xenial-docker-engine
+    image: geerlingguy/docker-ubuntu1604-ansible
+    command: /lib/systemd/systemd
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: yes
+    groups:
+      - docker-engine
   - name: centos
     image: geerlingguy/docker-centos7-ansible
     command: /usr/lib/systemd/systemd
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: yes
+    groups:
+      - docker-engine
 provisioner:
   name: ansible
   lint:
     name: ansible-lint
+  inventory:
+    group_vars:
+      docker-engine:
+        docker_version: 1.12*
+      docker-ce:
+        docker_use_docker_ce: true
+        docker_version: 18.06*
 scenario:
   name: default
 verifier:

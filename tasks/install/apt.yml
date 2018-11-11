@@ -1,4 +1,8 @@
 ---
+- name: Load defaults
+  include_vars:
+    file: "{{ 'download.docker.com.yml' if docker_use_docker_ce else 'dockerproject.yml' }}"
+
 - name: Make sure apt does SSL
   apt:
     name: apt-transport-https
@@ -9,13 +13,15 @@
   apt_key:
     keyserver: '{{ docker_apt_keyserver }}'
     id: '{{ docker_apt_key_id }}'
-  when: docker_apt_keyserver and docker_apt_key_id
+  when:
+    - docker_apt_keyserver|length > 0
+    - docker_apt_key_id|length > 0
 
 - name: Import apt key from URL
   apt_key:
     url: "{{ docker_apt_key_url }}"
     state: present
-  when: docker_apt_key_url is defined
+  when: docker_apt_key_url|length > 0
 
 - name: Add apt repository
   apt_repository:
