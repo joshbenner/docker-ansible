@@ -22,7 +22,7 @@ platforms:
     privileged: yes
     groups:
       - docker-engine
-  - name: centos
+  - name: centos-docker-engine
     image: geerlingguy/docker-centos7-ansible
     command: /usr/lib/systemd/systemd
     volumes:
