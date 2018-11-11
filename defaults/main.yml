@@ -23,6 +23,10 @@ docker_apt_key_id: "{{ _docker_default_apt_key_id }}"
 docker_apt_key_url: "{{ _docker_default_apt_key_url }}"
 docker_apt_repo: "{{ _docker_default_apt_repo }}"
 
+# Override these if you have your own mirrors/caches for them.
+docker_docker_engine_apt_repo: deb https://apt.dockerproject.org/repo {{ ansible_distribution|lower }}-{{ ansible_distribution_release|lower }} main
+docker_docker_ce_apt_repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+
 # "centos" repo used for CentOS and RHEL, but not Fedora.
 docker_yum_repo: https://yum.dockerproject.org/repo/main/centos/{{ ansible_distribution_major_version }}/
 docker_yum_gpg_key: https://yum.dockerproject.org/gpg
